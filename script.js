@@ -1,8 +1,9 @@
-function computerPlay(){
-    const moves = ['Rock', 'Paper', 'Scissors'];
+computerPlay();
 
-    const moveChoice = Math.floor(Math.random() * moves.length);
+function computerPlay(){
+    let moves = ['Rock', 'Paper', 'Scissors'];
+
+    let moveChoice = Math.floor(Math.random() * moves.length);
+    console.log(moves[moveChoice]);
     return moves[moveChoice];
 }
-
-console.log(moveChoice);
