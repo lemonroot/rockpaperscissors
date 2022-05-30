@@ -1,7 +1,3 @@
-let wins = 0;
-let draws = 0;
-game();
-
 function computerPlay(){
     const moves = ['rock', 'paper', 'scissors'];
 
@@ -10,55 +6,62 @@ function computerPlay(){
 }
 
 function game(){
-    for(let i = 0; i < 5; i++){
-        let answer = prompt("Round " + (i + 1) + ": Please input Rock, Paper, or Scissors.");
-        let computerSelection = computerPlay();
-        playRound(answer, computerSelection);
-    }
-    console.log("Final score: \nWINS: " + wins + "\nLOSSES: " + (5 - (wins + draws)) + "\nDRAWS: " + draws);
+    let answer = prompt(": Please input Rock, Paper, or Scissors.");
+    let computerSelection = computerPlay();
+    playRound(answer, computerSelection);
 }
 
 function playRound(answer, computerSelection){
     const answerFixed = answer.toLowerCase();
     if(answerFixed == computerSelection){
         console.log("Draw!");
-        draws++;
     } else{
         if(answerFixed == "rock"){
             if(computerSelection == "scissors"){
-                win(answerFixed, computerSelection);
-                wins++;
+                result("win", answerFixed, computerSelection);
             } else if(computerSelection == "paper"){
-                lose(answerFixed, computerSelection);
+                result("lose", computerSelection, answerFixed);
             }
         }
         else if(answerFixed == "scissors"){
             if(computerSelection == "paper"){
-                win(answerFixed, computerSelection);
-                wins++;
+                result("win", answerFixed, computerSelection);
             } else if(computerSelection == "rock"){
-                lose(answerFixed, computerSelection);
+                result("lose", computerSelection, answerFixed);
             }
         }
         else if(answerFixed == "paper"){
             if(computerSelection == "rock"){
-                win(answerFixed, computerSelection);
-                wins++;
+                result("win", answerFixed, computerSelection);
             } else if(computerSelection == "scissors"){
-                lose(answerFixed, computerSelection);
+                result("lose", computerSelection, answerFixed); 
             }
         } else{
             console.log("Invalid input!");
         }
     }
-    
 }
 
-function lose(answerFixed, computerSelection){
-    console.log("You lose! " + (answerFixed.charAt(0).toUpperCase() + answerFixed.substr(1).toLowerCase()) + " loses to " + computerSelection + "!");
+function createGUI(){
+    // buttons is a node list. It looks and acts much like an array.
+    const buttons = document.querySelectorAll("button");
+    console.log(buttons);
+
+    // we use the .forEach method to iterate through each button
+    buttons.forEach((button) => {
+        // and for each one we add a 'click' listener
+        button.addEventListener('click', function(e) {
+            alert(button.id);
+        });
+    });
 }
 
-function win(answerFixed, computerSelection){
-    console.log("You win! " + (answerFixed.charAt(0).toUpperCase() + answerFixed.substr(1).toLowerCase()) + " beats " + computerSelection + "!");
+function result(condition, result1, result2){
+    console.log("You " + condition + "! " + (result1.charAt(0).toUpperCase() + result1.substr(1).toLowerCase()) + " beats " + result2 + "!");
 }
+
+let wins = 0;
+let draws = 0;
+createGUI();
+//game();
 
