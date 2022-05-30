@@ -7,32 +7,47 @@ function computerPlay(){
 
 function game(answer){
     let computerSelection = computerPlay();
-    playRound(answer, computerSelection);
+    if (round >= 5){
+        playRound(answer, computerSelection);
+        resultFinalGUI(wins, losses, draws);
+        round = 1;
+        return;
+    }
+    else if (round < 5){
+        playRound(answer, computerSelection);
+        round++;}
 }
 
 function playRound(answer, computerSelection){
     if(answer == computerSelection){
         resultGUI("draw", answer, computerSelection);
+        return draws++;
     } else{
         if(answer == "rock"){
             if(computerSelection == "scissors"){
                 resultGUI("win", answer, computerSelection);
+                return wins++;
             } else if(computerSelection == "paper"){
                 resultGUI("lose", computerSelection, answer);
+                return losses++;
             }
         }
         else if(answer == "scissors"){
             if(computerSelection == "paper"){
                 resultGUI("win", answer, computerSelection);
+                return wins++;
             } else if(computerSelection == "rock"){
                 resultGUI("lose", computerSelection, answer);
+                return losses++;
             }
         }
         else if(answer == "paper"){
             if(computerSelection == "rock"){
                 resultGUI("win", answer, computerSelection);
+                return wins++;
             } else if(computerSelection == "scissors"){
                 resultGUI("lose", computerSelection, answer); 
+                return losses++;
             }
         } else{
             console.log("Invalid input!");
@@ -64,12 +79,22 @@ function resultGUI(condition, result1, result2){
     container.appendChild(div);
 }
 
+function resultFinalGUI(wins, losses, draws){
+    const container = document.querySelector("#buttoncontainer");
+    const div = document.createElement("div");
+    div.classList.add("result");
+    div.textContent = ("FINAL RESULTS: \nWINS: " + wins + "\nLOSSES: " + losses + "\nDRAWS: " + draws);
+    container.appendChild(div);
+}
+
 function result(condition, result1, result2){
     console.log("You " + condition + "! " + (result1.charAt(0).toUpperCase() + result1.substr(1).toLowerCase()) + " beats " + result2 + "!");
 }
 
 let wins = 0;
 let draws = 0;
+let losses = 0;
+let round = 1;
 btnListener();
 //game();
 
