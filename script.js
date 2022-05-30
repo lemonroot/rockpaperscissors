@@ -5,36 +5,34 @@ function computerPlay(){
     return moves[moveChoice];
 }
 
-function game(){
-    let answer = prompt(": Please input Rock, Paper, or Scissors.");
+function game(answer){
     let computerSelection = computerPlay();
     playRound(answer, computerSelection);
 }
 
 function playRound(answer, computerSelection){
-    const answerFixed = answer.toLowerCase();
-    if(answerFixed == computerSelection){
-        console.log("Draw!");
+    if(answer == computerSelection){
+        resultGUI("draw", answer, computerSelection);
     } else{
-        if(answerFixed == "rock"){
+        if(answer == "rock"){
             if(computerSelection == "scissors"){
-                result("win", answerFixed, computerSelection);
+                resultGUI("win", answer, computerSelection);
             } else if(computerSelection == "paper"){
-                result("lose", computerSelection, answerFixed);
+                resultGUI("lose", computerSelection, answer);
             }
         }
-        else if(answerFixed == "scissors"){
+        else if(answer == "scissors"){
             if(computerSelection == "paper"){
-                result("win", answerFixed, computerSelection);
+                resultGUI("win", answer, computerSelection);
             } else if(computerSelection == "rock"){
-                result("lose", computerSelection, answerFixed);
+                resultGUI("lose", computerSelection, answer);
             }
         }
-        else if(answerFixed == "paper"){
+        else if(answer == "paper"){
             if(computerSelection == "rock"){
-                result("win", answerFixed, computerSelection);
+                resultGUI("win", answer, computerSelection);
             } else if(computerSelection == "scissors"){
-                result("lose", computerSelection, answerFixed); 
+                resultGUI("lose", computerSelection, answer); 
             }
         } else{
             console.log("Invalid input!");
@@ -42,7 +40,7 @@ function playRound(answer, computerSelection){
     }
 }
 
-function createGUI(){
+function btnListener(){
     // buttons is a node list. It looks and acts much like an array.
     const buttons = document.querySelectorAll("button");
     console.log(buttons);
@@ -51,9 +49,19 @@ function createGUI(){
     buttons.forEach((button) => {
         // and for each one we add a 'click' listener
         button.addEventListener('click', function(e) {
-            alert(button.id);
+            game(button.id);
         });
     });
+}
+
+function resultGUI(condition, result1, result2){
+    const container = document.querySelector("#buttoncontainer");
+    const div = document.createElement("div");
+    div.classList.add("result");
+    if(condition != "draw"){
+        div.textContent = ("You " + condition + "! " + (result1.charAt(0).toUpperCase() + result1.substr(1).toLowerCase()) + " beats " + result2 + "!");
+    } else (div.textContent = "Draw!");
+    container.appendChild(div);
 }
 
 function result(condition, result1, result2){
@@ -62,6 +70,6 @@ function result(condition, result1, result2){
 
 let wins = 0;
 let draws = 0;
-createGUI();
+btnListener();
 //game();
 
